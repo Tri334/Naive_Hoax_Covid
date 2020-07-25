@@ -1,0 +1,57 @@
+<DOC>
+ <JUDUL>
+  Nasgor
+ </JUDUL>
+ <CAT>
+ A
+ </CAT>
+  <BERITA>
+  Sekarang saya sedang suka memasak. Masakan kesukaan saya sekarang adalah nasi goreng. Cara memasak nasi goreng adalah nasi digoreng
+ </BERITA>
+</DOC>
+
+<DOC>
+ <JUDUL>
+  Makan nasi
+ </JUDUL>
+ <CAT>
+ A
+ </CAT>
+  <BERITA>
+  Ukuran nasi sangatlah kecil, namun saya selalu makan nasi 
+</BERITA>
+</DOC>
+
+<DOC>
+ <JUDUL>
+  Nasgor ikan
+ </JUDUL>
+ <CAT>
+B
+ </CAT>
+  <BERITA>Mobil dan bus dapat mengangkut banyak penumpang. Namun, bus berukuran jauh lebih besar dari mobil, apalagi mobil-mobilan
+</BERITA>
+</DOC>
+
+<DOC>
+ <JUDUL>
+  Sawah beras
+ </JUDUL>
+ <CAT>
+B
+ </CAT>
+  <BERITA>Nasi berasal dari beras yang ditanam di sawah. Sawah berukuran kecil hanya bisa ditanami sedikit beras
+</BERITA>
+</DOC>
+
+<DOC>
+ <JUDUL>
+  Persawahan
+ </JUDUL>
+ <CAT>
+C
+ </CAT>
+  <BERITA>
+Bus pada umumnya berukuran besar dan berpenumpang banyak, sehingga bus tidak bisa melewati persawahan
+</BERITA>
+</DOC>
