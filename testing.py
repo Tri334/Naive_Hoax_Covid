@@ -16,6 +16,11 @@ unique_dict = {}
 weight = []
 weight_cat_dict = {}
 
+categori_only = {}
+
+sum_weight={}
+possible = {}
+
 with open("stopword2016.txt","r") as stopword: sword = stopword.read().splitlines()
 
 def openFile():
@@ -31,6 +36,17 @@ def preprocessing(berita):
     tokenize = re.findall("\w+", clean)
     token = " ".join(tokenize)
     return stemmer.stem(token)
+
+def categoriOnly(berita):
+    for item in start:
+        cat = item.find('cat').text
+        cat = preprocessing(cat)
+        if cat in categori_only:
+            categori_only[cat]+=1
+        else:
+            categori_only[cat]=1
+        return
+
 
 def termUnik(term,stopword):
     kata = " ".join(term)
@@ -67,7 +83,6 @@ def categorized(berita_cat):
 
     return categorized
 
-
 def termWeight(categori):
     for key in categori:
         # print(key)
@@ -83,6 +98,23 @@ def termWeight(categori):
         weight_cat_dict[key] = tes
         weight.append(waight_temp)
 
+def posterior(weight_dict):
+    for item in weight_cat_dict:
+        term_count = 0
+        for val in weight_cat_dict[item]:
+            term_count+=weight_cat_dict[item][val]
+        sum_weight[item]= term_count
+
+
+    for key in weight_cat_dict:
+        poss_term=0
+        temp = {}
+        for value in weight_cat_dict[key]:
+            poss_term = weight_cat_dict[key][value]
+            p_kata = (poss_term+1)/(sum_weight[key]+ len(unique))
+            temp[value]=p_kata
+        possible[f"P(w|{key})"]=temp
+
 start = openFile()
 webCraw(start)
 
@@ -92,35 +124,19 @@ webCraw(start)
 termUnik(list_berita,sword)
 categori = categorized(list_berita_cat)
 termWeight(categori)
+posterior(weight_cat_dict)
 
 # print(unique)
 # print(len(unique))
 
 frame = pd.DataFrame(weight_cat_dict)
 
-
-
-sum_weight={}
-for item in weight_cat_dict:
-    term_count = 0
-    for val in weight_cat_dict[item]:
-        term_count+=weight_cat_dict[item][val]
-    sum_weight[item]= term_count
-
-possible = {}
-
-for key in weight_cat_dict:
-    poss_term=0
-    temp = {}
-    for value in weight_cat_dict[key]:
-        poss_term = weight_cat_dict[key][value]
-        p_kata = (poss_term+1)/(sum_weight[key]+ len(unique))
-        temp[value]=p_kata
-    possible[f"P(w|{key})"]=temp
-
-
 frame_poss = pd.DataFrame(possible)
 print(frame_poss)
+
+text = 'Nasi Goreng Pedas'
+
+preprocessing(text)
 
 
 # print(weight)
