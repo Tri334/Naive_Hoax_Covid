@@ -1,0 +1,57 @@
+from bs4 import BeautifulSoup as sp
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+import re
+import json
+
+import numpy as np
+
+corpus = '..\corpus_contoh_real.txt'
+
+def openFile(corpus):
+    file = open(corpus, encoding="utf-8")
+    soup = sp(file,'html.parser')
+    doc_berita = soup.find_all("doc")
+    return doc_berita
+
+corp = openFile(corpus)
+
+
+all_berita = []
+for item in corp:
+    berita = item.find('berita').text
+    all_berita.append(berita)
+
+tes = np.squeeze(all_berita)
+
+# f = open('tes_file.txt', 'a')
+# for item in tes:
+#     f.write(str(item))
+# f.close()
+#
+f = open("tes_file.txt", "r")
+read = f.read()
+subs = '\R *\w\. |\(|\)|:|, |\.\n'
+subs2 = '\s *\w\. |\(|\)|:|, |\.\n|”|“|…|\.  |&|\*|\?|"'
+subs3 ='\. |, |\/\n'
+substwith= '\n+|\s +'
+
+cleaning_words = re.sub(subs2, " ", read)
+cleaning_words = re.sub(subs3, " ", cleaning_words)
+cleaning_words = re.sub(substwith, " ", cleaning_words)
+clean = cleaning_words.lower()
+
+ambil = 'Rp \d[ ,][\d]?[ ]?[[:word:]]+|Rp[ \.\d]+'
+re ='[a-zA-Z]ovid[- ]19'
+
+bulan = '[0-9]{2}  [0-9]{1,2} [AJ][[:word:]]+ \d{4}'
+tes2 = clean.split()
+token = " ".join(tes2)
+
+print(token)
+# f = open('clean_file.txt', 'a')
+# for item in cleaning_words:
+#     print(item)
+# f.close()
+
+# tokenize = re.findall("\w+", clean)
+

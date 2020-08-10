@@ -7,7 +7,10 @@ import pandas as pd
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
-
+subs = '\R *\w\. |\(|\)|:|, |\.\n'
+subs2 = '\s *\w\. |\(|\)|:|, |\.\n|”|“|…|\.  |&|\*|\?|"'
+subs3 ='\. |, |\/\n'
+substwith= '\n+|\s +'
 
 with open("stopword2016.txt","r") as stopword: stopword = stopword.read().splitlines()
 
@@ -36,10 +39,11 @@ def priorProbability(berita):
     return prior_proba
 
 def preprocessing(berita):
-    cleaning_words = re.sub("\W+"," ", berita)
+    cleaning_words = re.sub(subs2, " ", berita)
+    cleaning_words = re.sub(subs3, " ", cleaning_words)
+    cleaning_words = re.sub(substwith, " ", cleaning_words)
     clean = cleaning_words.lower()
-
-    tokenize = re.findall("\w+", clean)
+    tokenize = clean.split()
     token = " ".join(tokenize)
     return stemmer.stem(token)
 
@@ -170,4 +174,4 @@ print(pd.DataFrame(term_weight_dict))
 
 #Menghitung P(w|xi) setiap kategori
 condisional_probability = conProba(term_weight_dict,term_unik)
-# print(f"\nPosterior:\n{pd.DataFrame(condisional_probability)}\n")
+print(f"\nPosterior:\n{pd.DataFrame(condisional_probability)}\n")
