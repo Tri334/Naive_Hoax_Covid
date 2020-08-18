@@ -7,8 +7,7 @@ import pandas as pd
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
-subs = '\R *\w\. |\(|\)|:|, |\.\n'
-subs2 = '\s *\w\. |\(|\)|:|, |\.\n|”|“|…|\.  |&|\*|\?|"'
+subs2 = '\s *\w\. |\(|\)|:|, |\.\n|”|“|…|\.  |&|\*|\?|"|- | -'
 subs3 ='\. |, |\/\n'
 substwith= '\n+|\s +'
 
@@ -175,3 +174,47 @@ print(pd.DataFrame(term_weight_dict))
 #Menghitung P(w|xi) setiap kategori
 condisional_probability = conProba(term_weight_dict,term_unik)
 print(f"\nPosterior:\n{pd.DataFrame(condisional_probability)}\n")
+
+
+
+
+
+#fase Testing
+
+text =''
+
+tes_prepro = preprocessing(text)
+# print(tes_prepro)
+split = tes_prepro.split()
+print(split)
+
+tes_cek_term = []
+for item in split:
+    if item in term_unik:
+        tes_cek_term.append(item)
+
+print(tes_cek_term)
+
+hasil_kelas = {}
+for key in condisional_probability:
+    value = {}
+    for val in condisional_probability[key]:
+        if val in tes_cek_term:
+            value[val]=condisional_probability[key][val]
+    hasil_kelas[key] = value
+
+print(f"\nHasil Setelah Dicari consnya:\n{pd.DataFrame(hasil_kelas)}\n")
+
+hasil_tes = {}
+for key in hasil_kelas:
+    count = 1
+    hasil = 0
+    for val in hasil_kelas[key]:
+        count *= hasil_kelas[key][val]
+    hasil = prior_proba[key] * count
+    hasil_tes[key] = hasil
+
+print(f"\nHasil Posterior masing masing:\n{hasil_tes}\n")
+
+print(f"\nHasil Kategori :\n{max(hasil_tes,key=hasil_tes.get)}"
+      f"\nDengan Nilai :\n{max(hasil_tes.values())}")

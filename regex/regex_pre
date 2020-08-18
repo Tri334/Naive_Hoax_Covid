@@ -45,9 +45,9 @@ re ='[a-zA-Z]ovid[- ]19'
 
 bulan = '[0-9]{2}  [0-9]{1,2} [AJ][[:word:]]+ \d{4}'
 tes2 = clean.split()
-token = " ".join(tes2)
+# token = " ".join(tes2)
 
-print(token)
+print(tes2)
 # f = open('clean_file.txt', 'a')
 # for item in cleaning_words:
 #     print(item)
